@@ -6,7 +6,7 @@ description: 欢迎来到KevinZの破站~
 avatarTitle: 点击
 # 头像里面的描述
 avatarDesc: 进入博客主页
-url: "https://blog.zknb.top"
+url: "https://blog.zknb.cf"
 
 # 博客是否自动生成目录，false为不生成
 enableToc: true
@@ -78,7 +78,7 @@ nav:
     - {title: 文章, description: 杂七杂八的东西, url: '/archive/'}   
     - {title: 标签, description: 杂七杂八的分类, url: '/tags/'}            
     - {title: 关于我, description: 一个废物, url: '/about/'}
-    - {title: 下载站, description: 垃圾堆, url: 'https://pan.zknb.top'}   
+    - {title: 下载站, description: 垃圾堆, url: 'https://pan.zknb.cf'}   
     
 
 
