@@ -3,7 +3,7 @@
    License: none (public domain)
 */
 
-@import url(https://cdn.jsdelivr.net/npm/animate.css/animate.css);
+@import url(https://gcore.jsdelivr.net/npm/animate.css/animate.css);
 @import url(tomorrow.css);
 * {
     transition: all 0.5s ease-in-out;
