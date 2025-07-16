@@ -2,6 +2,13 @@
 (function() {
     console.log('main.js 开始加载...');
     
+    // 防止重复初始化的全局标志
+    if (window.mainJSInitialized) {
+        console.log('main.js 已经初始化过，跳过重复加载');
+        return;
+    }
+    window.mainJSInitialized = true;
+    
     // 等待jQuery加载
     function waitForJQuery() {
         if (typeof $ !== 'undefined') {
@@ -38,44 +45,59 @@
                     }
                 });
                 $(document).on("pjax:complete",function(){
+                    // 防止重复处理
+                    if (window.pjaxCompleteProcessing) {
+                        console.log('pjax:complete 正在处理中，跳过');
+                        return;
+                    }
+                    window.pjaxCompleteProcessing = true;
+                    
+                    // 重新初始化代码高亮
                     if (typeof hljs !== 'undefined') {
                         hljs.highlightAll();
                     }
                     
-                    // 重新初始化vercount统计
-                    console.log('Pjax页面切换完成，重新初始化vercount');
+                    console.log('Pjax页面切换完成，重新初始化功能');
                     
                     // 延迟执行确保DOM完全更新
                     setTimeout(function() {
+                        // 重新初始化 Vercount 统计
                         try {
-                            // 方法1: 触发DOMContentLoaded事件让vercount重新初始化
-                            const event = new Event('DOMContentLoaded', {
-                                bubbles: true,
-                                cancelable: true
-                            });
-                            document.dispatchEvent(event);
+                            console.log('开始重新初始化 Vercount 统计');
                             
-                            // 方法2: 手动重新运行vercount脚本
-                            // 查找并重新执行vercount相关的初始化代码
-                            const scripts = document.querySelectorAll('script[src*="events.vercount.one"]');
-                            if (scripts.length > 0) {
-                                // 创建新的script元素来重新触发vercount
-                                const newScript = document.createElement('script');
-                                newScript.src = scripts[0].src + '?t=' + Date.now();
-                                newScript.async = true;
-                                document.head.appendChild(newScript);
+                            // 方法1: 检查并重新执行 vercount 脚本
+                            const vercountElements = document.querySelectorAll('[id^="vercount_value_"]');
+                            if (vercountElements.length > 0) {
+                                // 重置显示为 Loading
+                                vercountElements.forEach(function(el) {
+                                    el.innerHTML = '<span class="loadervercount"></span>';
+                                });
                                 
-                                // 清理：5秒后移除旧脚本
-                                setTimeout(() => {
-                                    if (newScript.parentNode) {
-                                        newScript.parentNode.removeChild(newScript);
-                                    }
-                                }, 5000);
+                                // 重新创建并执行 vercount 脚本
+                                const existingScript = document.querySelector('script[src*="events.vercount.one/js"]');
+                                if (existingScript) {
+                                    const newScript = document.createElement('script');
+                                    newScript.defer = true;
+                                    newScript.src = 'https://events.vercount.one/js';
+                                    newScript.onload = function() {
+                                        console.log('Vercount 脚本重新加载完成');
+                                    };
+                                    
+                                    // 移除旧脚本并添加新脚本
+                                    existingScript.remove();
+                                    document.head.appendChild(newScript);
+                                } else {
+                                    // 如果找不到现有脚本，直接添加新脚本
+                                    const newScript = document.createElement('script');
+                                    newScript.defer = true;
+                                    newScript.src = 'https://events.vercount.one/js';
+                                    document.head.appendChild(newScript);
+                                }
                             }
                             
-                            console.log('Vercount重新初始化完成');
+                            console.log('Vercount 统计重新初始化完成');
                         } catch (e) {
-                            console.error('Vercount重新初始化失败:', e);
+                            console.log('Vercount 重新初始化失败:', e);
                         }
                         
                         // 重新初始化评论系统
@@ -124,6 +146,9 @@
                         } catch (e) {
                             console.error('评论系统重新初始化失败:', e);
                         }
+                        
+                        // 重置处理标志
+                        window.pjaxCompleteProcessing = false;
                     }, 200);
                 });
                 console.log('Pjax 功能已初始化');
