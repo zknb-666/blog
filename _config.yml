@@ -11,8 +11,8 @@ url: "https://blog.zknb.cf"
 # 博客是否自动生成目录，false为不生成
 enableToc: true
 
-#Background
-background: //imgapi.cn/api.php?zd=zsy&fl=dongman
+#Background  
+background: https://imgapi.cn/api.php?zd=zsy&fl=dongman
 
 # Comment
 comment:
@@ -34,7 +34,7 @@ social:
 
 #Music
 meting:
-    autohide: ture
+    autohide: true
     server: tencent
     type: playlist
     id: 2139464986
@@ -46,18 +46,14 @@ meting:
 baidu:
     id: 1dcd2e7b4004f0ffde16aa82c7bac2b7
     
-# Google Analytics
+# Google Analytics - 已禁用
 # 使用博客模板请去掉或者更换 id
 #ga:
 #   id: UA-84134159-3  
-#  host: auto  
+#   host: auto
 
 
 # 《----------------- 上面的信息修改成你自己的 ---------------------------》
-#
-#
-# 《--------------- 下面的信息可以自行选择是否修改 ------------------------》
-
 
 permalink: /:year/:month/:title/
 # Format
@@ -71,16 +67,13 @@ cover_color: clear
 # The blog button should not be removed.
 blog_button:
     title: KevinZ
-   
 
-# Navigation buttons in the front page.s
+# Navigation buttons in the front page.
 nav:
     - {title: 文章, description: 杂七杂八的东西, url: '/archive/'}   
     - {title: 标签, description: 杂七杂八的分类, url: '/tags/'}            
     - {title: 关于我, description: 一个废物, url: '/about/'}
     - {title: 下载站, description: 垃圾堆, url: 'https://pan.zknb.cf'}   
-    
-
 
 # Pagination
 gems: [jekyll-paginate,jekyll-sitemap]

@@ -1,35 +1,41 @@
 <!--jquery and pjax-->
-<script src="//gcore.jsdelivr.net/npm/jquery/dist/jquery.js"></script>
-<script src="//gcore.jsdelivr.net/npm/jquery-pjax/jquery.pjax.js"></script>
+<script src="https://gcore.jsdelivr.net/npm/jquery/dist/jquery.js"></script>
+<script src="https://gcore.jsdelivr.net/npm/jquery-pjax/jquery.pjax.js"></script>
 
 <!-- nprogress -->
-<script data-pjax defer src="//gcore.jsdelivr.net/npm/nprogress/nprogress.js"></script>
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/nprogress/nprogress.css">
+<script src="https://gcore.jsdelivr.net/npm/nprogress/nprogress.js"></script>
+<link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/nprogress/nprogress.css">
 
 <!-- fontawesome -->
-<script data-pjax defer src="//gcore.jsdelivr.net/npm/@fortawesome/fontawesome-free/js/fontawesome.js"></script>
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.css">
+<script src="https://gcore.jsdelivr.net/npm/@fortawesome/fontawesome-free/js/fontawesome.js"></script>
+<link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.css">
 
 <!-- glidejs -->
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/glidejs/dist/css/glide.core.css">
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/glidejs/dist/css/glide.theme.css">
-<script data-pjax defer src="//gcore.jsdelivr.net/npm/glidejs/dist/glide.js"></script>
+<link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/glidejs/dist/css/glide.core.css">
+<link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/glidejs/dist/css/glide.theme.css">
+<script src="https://gcore.jsdelivr.net/npm/glidejs/dist/glide.js"></script>
 
 <!-- Highlight -->
-<link rel="stylesheet" href="//gcore.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github-dark.min.css">
-<script data-pjax defer src="//gcore.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js"></script>
+<link rel="stylesheet" href="https://gcore.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github-dark.min.css">
+<script src="https://gcore.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js"></script>
 
 <!-- and it's easy to individually load additional languages -->
-<script data-pjax defer src="//gcore.jsdelivr.net/gh/highlightjs/cdn-release/build/languages/go.min.js"></script>
+<script src="https://gcore.jsdelivr.net/gh/highlightjs/cdn-release/build/languages/go.min.js"></script>
 
-<script>hljs.highlightAll();</script>
+<script defer>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof hljs !== 'undefined') {
+      hljs.highlightAll();
+    }
+  });
+</script>
 
 <!-- Hls -->
-<script data-pjax defer src="//gcore.jsdelivr.net/npm/hls.js/dist/hls.js"></script>
+<script src="https://gcore.jsdelivr.net/npm/hls.js/dist/hls.js"></script>
 
 <!-- require APlayer -->
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
-<script data-pjax defer src="//gcore.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://gcore.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
 <style>
 .aplayer.aplayer-fixed .aplayer-lrc {
    text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000 !important;
@@ -45,24 +51,111 @@
 var meting_api='{{site.meting.api}}';
 </script>
 {% endif %}
-<script data-pjax defer src="//gcore.jsdelivr.net/npm/meting/dist/Meting.min.js"></script>
+<script src="https://gcore.jsdelivr.net/npm/meting/dist/Meting.min.js"></script>
 
 <!-- 一言 -->
 <script>
+   var hitokotoRetryCount = 0;
+   var maxRetryCount = 3;
+   var fallbackQuotes = [
+       { hitokoto: "愿你走出半生，归来仍是少年。", from: "网络" },
+       { hitokoto: "生活不是等待暴风雨过去，而是要学会在雨中舞蹈。", from: "网络" },
+       { hitokoto: "每一个不曾起舞的日子，都是对生命的辜负。", from: "尼采" },
+       { hitokoto: "山川异域，风月同天。", from: "日本长屋王" },
+       { hitokoto: "愿中国青年都摆脱冷气，只是向上走。", from: "鲁迅" }
+   ];
+
    function loveHitokoto() {
-      fetch("//v1.hitokoto.cn?c=a")
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-              $('#hitokoto_text').text(data.hitokoto);
-              $('#hitokoto_author').text("——《" + (data.from) + "》");
-            })
-    }
-    loveHitokoto();
+      // 首先尝试使用备用API
+      tryFetchHitokoto();
+   }
+   
+   function tryFetchHitokoto() {
+      var apis = [
+          'https://v1.hitokoto.cn/?c=a&encode=js&charset=utf-8&callback=hitokotoCallback',
+          'https://api.btstu.cn/yan/api.php?charset=utf-8&encode=js&callback=hitokotoCallback2'
+      ];
+      
+      if (hitokotoRetryCount < apis.length) {
+          var script = document.createElement('script');
+          script.src = apis[hitokotoRetryCount];
+          
+          script.onload = function() {
+              document.head.removeChild(script);
+          };
+          
+          script.onerror = function() {
+              console.log('一言API请求失败，尝试次数：' + (hitokotoRetryCount + 1));
+              document.head.removeChild(script);
+              hitokotoRetryCount++;
+              
+              if (hitokotoRetryCount < apis.length) {
+                  setTimeout(tryFetchHitokoto, 1000);
+              } else {
+                  // 所有API都失败，使用本地备用语句
+                  useFallbackQuote();
+              }
+          };
+          
+          document.head.appendChild(script);
+      } else {
+          useFallbackQuote();
+      }
+   }
+   
+   function useFallbackQuote() {
+       console.log('使用本地备用语句');
+       var randomQuote = fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
+       if (typeof $ !== 'undefined') {
+           $('#hitokoto_text').text(randomQuote.hitokoto);
+           $('#hitokoto_author').text("——《" + randomQuote.from + "》");
+       }
+   }
+   
+   // 第一个API的回调函数
+   function hitokotoCallback(data) {
+       if (typeof $ !== 'undefined' && data && data.hitokoto) {
+           $('#hitokoto_text').text(data.hitokoto);
+           $('#hitokoto_author').text("——《" + (data.from || "佚名") + "》");
+       } else {
+           hitokotoRetryCount++;
+           if (hitokotoRetryCount < maxRetryCount) {
+               setTimeout(tryFetchHitokoto, 1000);
+           } else {
+               useFallbackQuote();
+           }
+       }
+   }
+   
+   // 第二个API的回调函数
+   function hitokotoCallback2(data) {
+       if (typeof $ !== 'undefined' && data && data.text) {
+           $('#hitokoto_text').text(data.text);
+           $('#hitokoto_author').text("——《" + (data.author || "佚名") + "》");
+       } else {
+           useFallbackQuote();
+       }
+   }
+    
+    // 确保在jQuery加载完成后执行
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof $ !== 'undefined') {
+            loveHitokoto();
+        } else {
+            // 如果jQuery还没加载，等待一下再试
+            setTimeout(function() {
+                if (typeof $ !== 'undefined') {
+                    loveHitokoto();
+                } else {
+                    // jQuery加载失败，直接使用备用语句
+                    setTimeout(useFallbackQuote, 1000);
+                }
+            }, 100);
+        }
+    });
 </script>
 
 <!--Animate.css-->
-<link rel="stylesheet" href="//gcore.jsdelivr.net/npm/animate.css/animate.css">
+<link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/animate.css/animate.css">
 
-<script data-pjax defer async src="/js/main.js"></script>
+<script src="/js/main.js"></script>

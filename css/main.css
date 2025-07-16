@@ -10,6 +10,12 @@
     transform: translate3d(0);
 }
 
+/* 打赏弹窗不应用全局 transform */
+.shang_box,
+.hide_box {
+    transform: none;
+}
+
 html,
 body,
 div,
@@ -592,7 +598,7 @@ img::-moz-selection {
     }
 }
 
-.loaderbusuanzi {
+.loadervercount {
     display: inline-block;
     box-sizing: border-box;
     width: 10px;
@@ -1425,16 +1431,19 @@ nav a {
     opacity: 0.5;
     filter: alpha(opacity=50);
     -moz-opacity: 0.5;
+    transform: none !important;
 }
 
 .shang_box {
-    position: fixed;
-    top: 50%;
-    left: 50%;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
     z-index: 1000;
     display: none;
-    margin-top: -210px;
-    margin-left: -145px;
+    transform: translate(-50%, -50%) !important;
+    -webkit-transform: translate(-50%, -50%) !important;
+    -moz-transform: translate(-50%, -50%) !important;
+    -ms-transform: translate(-50%, -50%) !important;
     padding: 10px;
     min-width: 258px;
     border-radius: 10px;
@@ -1623,8 +1632,7 @@ nav a {
         left: 50%;
         z-index: 1000;
         display: none;
-        margin-top: -210px;
-        margin-left: -145px;
+        transform: translate(-50%, -50%) !important;
         padding: 10px;
         min-width: 258px;
         border-radius: 10px;
