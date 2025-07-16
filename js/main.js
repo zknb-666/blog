@@ -41,6 +41,90 @@
                     if (typeof hljs !== 'undefined') {
                         hljs.highlightAll();
                     }
+                    
+                    // 重新初始化vercount统计
+                    console.log('Pjax页面切换完成，重新初始化vercount');
+                    
+                    // 延迟执行确保DOM完全更新
+                    setTimeout(function() {
+                        try {
+                            // 方法1: 触发DOMContentLoaded事件让vercount重新初始化
+                            const event = new Event('DOMContentLoaded', {
+                                bubbles: true,
+                                cancelable: true
+                            });
+                            document.dispatchEvent(event);
+                            
+                            // 方法2: 手动重新运行vercount脚本
+                            // 查找并重新执行vercount相关的初始化代码
+                            const scripts = document.querySelectorAll('script[src*="events.vercount.one"]');
+                            if (scripts.length > 0) {
+                                // 创建新的script元素来重新触发vercount
+                                const newScript = document.createElement('script');
+                                newScript.src = scripts[0].src + '?t=' + Date.now();
+                                newScript.async = true;
+                                document.head.appendChild(newScript);
+                                
+                                // 清理：5秒后移除旧脚本
+                                setTimeout(() => {
+                                    if (newScript.parentNode) {
+                                        newScript.parentNode.removeChild(newScript);
+                                    }
+                                }, 5000);
+                            }
+                            
+                            console.log('Vercount重新初始化完成');
+                        } catch (e) {
+                            console.error('Vercount重新初始化失败:', e);
+                        }
+                        
+                        // 重新初始化评论系统
+                        try {
+                            console.log('开始重新初始化评论系统');
+                            
+                            // 特殊处理Livere评论系统
+                            const livereContainer = document.getElementById('lv-container');
+                            if (livereContainer && typeof LivereTower === 'function') {
+                                try {
+                                    // 清空容器内容
+                                    const existingLivere = livereContainer.querySelector('.livere-wrapper, .livere');
+                                    if (existingLivere) {
+                                        existingLivere.remove();
+                                    }
+                                    
+                                    // 重新初始化Livere
+                                    LivereTower.init();
+                                    console.log('Livere评论系统重新初始化成功');
+                                } catch (e) {
+                                    console.log('Livere重新初始化失败:', e);
+                                }
+                            }
+                            
+                            // 重新执行评论区域的脚本
+                            const commentSection = document.querySelector('.post-comments');
+                            if (commentSection) {
+                                // 查找并重新执行评论区域内的script标签
+                                const commentScripts = commentSection.querySelectorAll('script');
+                                commentScripts.forEach(function(script) {
+                                    if (script.src) {
+                                        // 对于外部脚本，不重新加载，因为已经在comments.html中处理了防重复
+                                        return;
+                                    } else if (script.innerHTML) {
+                                        // 对于内联脚本，重新执行
+                                        try {
+                                            eval(script.innerHTML);
+                                        } catch (e) {
+                                            console.log('重新执行评论脚本时出错:', e);
+                                        }
+                                    }
+                                });
+                            }
+                            
+                            console.log('评论系统重新初始化完成');
+                        } catch (e) {
+                            console.error('评论系统重新初始化失败:', e);
+                        }
+                    }, 200);
                 });
                 console.log('Pjax 功能已初始化');
             } else {

@@ -55,104 +55,26 @@ var meting_api='{{site.meting.api}}';
 
 <!-- 一言 -->
 <script>
-   var hitokotoRetryCount = 0;
-   var maxRetryCount = 3;
-   var fallbackQuotes = [
-       { hitokoto: "愿你走出半生，归来仍是少年。", from: "网络" },
-       { hitokoto: "生活不是等待暴风雨过去，而是要学会在雨中舞蹈。", from: "网络" },
-       { hitokoto: "每一个不曾起舞的日子，都是对生命的辜负。", from: "尼采" },
-       { hitokoto: "山川异域，风月同天。", from: "日本长屋王" },
-       { hitokoto: "愿中国青年都摆脱冷气，只是向上走。", from: "鲁迅" }
-   ];
-
-   function loveHitokoto() {
-      // 首先尝试使用备用API
-      tryFetchHitokoto();
-   }
-   
-   function tryFetchHitokoto() {
-      var apis = [
-          'https://v1.hitokoto.cn/?c=a&encode=js&charset=utf-8&callback=hitokotoCallback',
-          'https://api.btstu.cn/yan/api.php?charset=utf-8&encode=js&callback=hitokotoCallback2'
-      ];
-      
-      if (hitokotoRetryCount < apis.length) {
-          var script = document.createElement('script');
-          script.src = apis[hitokotoRetryCount];
-          
-          script.onload = function() {
-              document.head.removeChild(script);
-          };
-          
-          script.onerror = function() {
-              console.log('一言API请求失败，尝试次数：' + (hitokotoRetryCount + 1));
-              document.head.removeChild(script);
-              hitokotoRetryCount++;
-              
-              if (hitokotoRetryCount < apis.length) {
-                  setTimeout(tryFetchHitokoto, 1000);
-              } else {
-                  // 所有API都失败，使用本地备用语句
-                  useFallbackQuote();
-              }
-          };
-          
-          document.head.appendChild(script);
-      } else {
-          useFallbackQuote();
-      }
-   }
-   
-   function useFallbackQuote() {
-       console.log('使用本地备用语句');
-       var randomQuote = fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
-       if (typeof $ !== 'undefined') {
-           $('#hitokoto_text').text(randomQuote.hitokoto);
-           $('#hitokoto_author').text("——《" + randomQuote.from + "》");
-       }
-   }
-   
-   // 第一个API的回调函数
-   function hitokotoCallback(data) {
-       if (typeof $ !== 'undefined' && data && data.hitokoto) {
-           $('#hitokoto_text').text(data.hitokoto);
-           $('#hitokoto_author').text("——《" + (data.from || "佚名") + "》");
-       } else {
-           hitokotoRetryCount++;
-           if (hitokotoRetryCount < maxRetryCount) {
-               setTimeout(tryFetchHitokoto, 1000);
-           } else {
-               useFallbackQuote();
-           }
-       }
-   }
-   
-   // 第二个API的回调函数
-   function hitokotoCallback2(data) {
-       if (typeof $ !== 'undefined' && data && data.text) {
-           $('#hitokoto_text').text(data.text);
-           $('#hitokoto_author').text("——《" + (data.author || "佚名") + "》");
-       } else {
-           useFallbackQuote();
-       }
-   }
-    
-    // 确保在jQuery加载完成后执行
-    document.addEventListener('DOMContentLoaded', function() {
-        if (typeof $ !== 'undefined') {
-            loveHitokoto();
-        } else {
-            // 如果jQuery还没加载，等待一下再试
-            setTimeout(function() {
-                if (typeof $ !== 'undefined') {
-                    loveHitokoto();
-                } else {
-                    // jQuery加载失败，直接使用备用语句
-                    setTimeout(useFallbackQuote, 1000);
-                }
-            }, 100);
-        }
-    });
+// 一言简单实现
+fetch('https://v1.hitokoto.cn')
+  .then(response => response.json())
+  .then(data => {
+    const hitokotoText = document.getElementById('hitokoto_text');
+    const hitokotoAuthor = document.getElementById('hitokoto_author');
+    if (hitokotoText && hitokotoAuthor) {
+      hitokotoText.textContent = data.hitokoto;
+      hitokotoAuthor.textContent = data.from ? `——${data.from}` : '';
+    }
+  })
+  .catch(err => {
+    console.error('一言获取失败:', err);
+    const hitokotoText = document.getElementById('hitokoto_text');
+    const hitokotoAuthor = document.getElementById('hitokoto_author');
+    if (hitokotoText && hitokotoAuthor) {
+      hitokotoText.textContent = '愿你走出半生，归来仍是少年。';
+      hitokotoAuthor.textContent = '——网络';
+    }
+  });
 </script>
 
 <!--Animate.css-->

@@ -4,7 +4,6 @@ layout: default
 
 <head>
   <link rel="stylesheet" href="{{ "/css/post.css" | prepend: site.baseurl }}">
-  <!-- vercount.one 统计脚本已在 head.html 中加载 -->
 </head>
 
 <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
@@ -12,10 +11,8 @@ layout: default
     <h1 class="post-title">{{ page.title }}</h1>
     <div class="post-meta">
       <svg t="1660013553321" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="14070" width="15" height="15"><path d="M112 880c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V460H112v420z m768-696H712v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H384v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H144c-17.7 0-32 14.3-32 32v176h800V216c0-17.7-14.3-32-32-32z" p-id="14071" fill="#707070"></path></svg>
-      <time datetime="{{page.date | date: date_to_xmlschema}}" itemprop="datePublished" class="post-meta__date date">{{page.date | date: "%F"}}</time>  
-
-      <span id="vercount_container_page_pv"> | 阅读：<span id="vercount_value_page_pv"><span class="loadervercount"></span></span>次</span>
-    </p>
+      <time datetime="{{page.date | date: date_to_xmlschema}}" itemprop="datePublished" class="post-meta__date date">{{page.date | date: "%F"}}</time>
+      | 阅读: <span id="vercount_value_page_pv"><span class="loadervercount"></span></span>
     </div>
   </header>
 
