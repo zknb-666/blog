@@ -176,20 +176,7 @@
             /*逻辑判断结束*/
             
             /*打赏*/
-            $(function(){
-                $(".pay_item").click(function(){
-                    $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
-                    var dataid=$(this).attr('data-id');
-                    $(".shang_payimg img").attr("src","/images/payimg/"+dataid+"img.png");
-                    $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
-                });
-            });
-
-            // 定义全局函数
-            window.dashangToggle = function(){
-                $(".hide_box").fadeToggle();
-                $(".shang_box").fadeToggle();
-            }
+            // 打赏功能已移动到 reward.html 中的独立脚本
             console.log('打赏功能已初始化');
             /*打赏结束*/
             

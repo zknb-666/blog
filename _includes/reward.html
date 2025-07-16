@@ -1,41 +1,335 @@
-<section>
-  <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏一个呗</a></p>
-  <div class="hide_box"></div>
-  <div class="shang_box">
-      <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><svg t="1660014078869" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3027" width="16" height="16"><path d="M544.448 499.2l284.576-284.576a32 32 0 0 0-45.248-45.248L499.2 453.952 214.624 169.376a32 32 0 0 0-45.248 45.248l284.576 284.576-284.576 284.576a32 32 0 0 0 45.248 45.248l284.576-284.576 284.576 284.576a31.904 31.904 0 0 0 45.248 0 32 32 0 0 0 0-45.248L544.448 499.2z" p-id="3028" fill="#707070"></path></svg></a>
-      
-      <div class="shang_tit">
-          <p>感谢您的支持，我会继续努力的!</p>
-      </div>
-      <div class="shang_payimg">
-          <img src="/images/payimg/alipayimg.png" alt="扫码支持" title="扫一扫" />
-      </div>
-          <div class="pay_explain">扫码打赏，你说多少就多少</div>
-      <div class="shang_payselect">
-          <div class="pay_item checked" data-id="alipay">
-              <span class="pay_logo"><svg t="1660013980479" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1353" width="48" height="48"><path d="M902.095 652.871l-250.96-84.392s19.287-28.87 39.874-85.472c20.59-56.606 23.539-87.689 23.539-87.689l-162.454-1.339v-55.487l196.739-1.387v-39.227H552.055v-89.29h-96.358v89.294H272.133v39.227l183.564-1.304v59.513h-147.24v31.079h303.064s-3.337 25.223-14.955 56.606c-11.615 31.38-23.58 58.862-23.58 58.862s-142.3-49.804-217.285-49.804c-74.985 0-166.182 30.123-175.024 117.55-8.8 87.383 42.481 134.716 114.728 152.139 72.256 17.513 138.962-0.173 197.04-28.607 58.087-28.391 115.081-92.933 115.081-92.933l292.486 142.041c-11.932 69.3-72.067 119.914-142.387 119.844H266.37c-79.714 0.078-144.392-64.483-144.466-144.194V266.374c-0.074-79.72 64.493-144.399 144.205-144.47h491.519c79.714-0.073 144.396 64.49 144.466 144.203v386.764z m-365.76-48.895s-91.302 115.262-198.879 115.262c-107.623 0-130.218-54.767-130.218-94.155 0-39.34 22.373-82.144 113.943-88.333 91.519-6.18 215.2 67.226 215.2 67.226h-0.047z" fill="#02A9F1" p-id="1354"></path></svg></span>
-          </div>
-          <div class="pay_item" data-id="weipay">
-              <span class="pay_logo"><svg t="1660014036898" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2024" width="40" height="48"><path d="M0 488.96v-30.72C2.56 430.08 7.68 404.48 15.36 378.88c20.48-66.56 53.76-122.88 99.84-171.52C179.2 138.24 256 94.72 340.48 66.56c48.64-15.36 97.28-23.04 145.92-25.6 40.96-2.56 79.36 0 120.32 7.68 33.28 5.12 64 12.8 97.28 25.6 79.36 28.16 148.48 71.68 207.36 133.12 7.68 7.68 12.8 15.36 20.48 23.04-2.56 0-2.56 2.56-5.12 2.56-20.48 10.24-40.96 20.48-61.44 28.16-143.36 66.56-286.72 133.12-430.08 197.12-28.16 12.8-56.32 10.24-81.92-5.12-20.48-12.8-38.4-25.6-58.88-38.4-12.8-10.24-25.6-17.92-40.96-28.16-12.8-7.68-20.48-2.56-20.48 12.8v2.56c2.56 12.8 5.12 25.6 10.24 38.4 25.6 61.44 51.2 120.32 76.8 181.76 7.68 17.92 20.48 25.6 35.84 23.04 10.24 0 20.48-2.56 28.16-7.68 30.72-15.36 58.88-33.28 87.04-51.2 156.16-92.16 309.76-184.32 465.92-276.48 10.24-7.68 23.04-12.8 33.28-20.48 0 2.56 2.56 2.56 2.56 5.12 5.12 10.24 10.24 17.92 12.8 28.16 28.16 61.44 40.96 125.44 35.84 192-2.56 28.16-7.68 56.32-15.36 84.48-17.92 61.44-48.64 115.2-92.16 163.84-51.2 56.32-115.2 99.84-184.32 128-40.96 15.36-81.92 28.16-122.88 35.84-28.16 5.12-56.32 7.68-81.92 7.68h-46.08c-20.48-2.56-40.96-2.56-58.88-5.12-30.72-5.12-61.44-12.8-89.6-23.04H322.56c-12.8 7.68-23.04 15.36-35.84 23.04-28.16 17.92-53.76 33.28-81.92 48.64-5.12 2.56-12.8 5.12-17.92 5.12s-10.24-2.56-10.24-10.24c0-5.12 0-12.8 2.56-17.92 5.12-38.4 12.8-74.24 20.48-112.64 0-5.12 0-7.68-5.12-10.24-15.36-12.8-30.72-23.04-46.08-38.4-51.2-46.08-92.16-102.4-117.76-166.4C20.48 599.04 12.8 568.32 7.68 537.6c-2.56-12.8-2.56-25.6-2.56-40.96-5.12 0-5.12-2.56-5.12-7.68z" fill="#6BCC03" p-id="2025"></path></svg></span>
-          </div>
-      </div>
-      <div class="shang_info">
-          <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
-      </div>
-  </div>
-<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
-       <ul class="pager">
-        {% if page.previous.url %}
-        <li class="previous">
-            <a href="{{ page.previous.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.previous.title}}">上一篇：  <span>{{page.previous.title}}</span>
-            </a>
-        </li>
-        {% endif %}
-        {% if page.next.url %}
-        <li class="next">
-            <a href="{{ page.next.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.next.title}}">下一篇：  <span>{{page.next.title}}</span>
-            </a>
-        </li>
-        {% endif %}
-    </ul>
+<!-- 打赏支持模块 - 悬停弹出版 -->
+<section class="reward-section">
+    <div class="reward-hover-container">
+        <!-- 打赏按钮 -->
+        <div class="reward-trigger">
+            <span class="reward-icon">💖</span>
+            <span class="reward-text">打赏支持</span>
+        </div>
+        
+        <!-- 悬停弹出的二维码卡片 -->
+        <div class="reward-popup">
+            <div class="reward-popup-inner">
+                <h4>感谢支持</h4>
+                <p>您的支持是我持续创作的动力</p>
+                
+                <!-- 支付方式选择 -->
+                <div class="payment-selector">
+                    <div class="payment-option active" data-payment="alipay">
+                        <div class="payment-icon alipay-icon">💙</div>
+                        <span>支付宝</span>
+                    </div>
+                    <div class="payment-option" data-payment="wechat">
+                        <div class="payment-icon wechat-icon">💚</div>
+                        <span>微信</span>
+                    </div>
+                </div>
+                
+                <!-- 二维码显示 -->
+                <div class="qrcode-display">
+                    <img id="reward-qrcode" src="/images/payimg/alipayimg.png" alt="扫码支付" />
+                    <p class="qr-tip">扫码即可支持</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
+
+<style>
+/* 打赏悬停容器 */
+.reward-section {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.reward-hover-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* 打赏触发按钮 */
+.reward-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: white;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.reward-trigger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    background: linear-gradient(135deg, #ee5a24, #ff6b6b);
+}
+
+.reward-icon {
+    font-size: 18px;
+    animation: heartbeat 2s infinite;
+}
+
+@keyframes heartbeat {
+    0%, 50%, 100% { transform: scale(1); }
+    25%, 75% { transform: scale(1.1); }
+}
+
+/* 悬停弹出卡片 */
+.reward-popup {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.reward-hover-container:hover .reward-popup {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+.reward-popup-inner {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 280px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid #eee;
+    position: relative;
+}
+
+/* 小箭头 */
+.reward-popup-inner::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: white;
+}
+
+.reward-popup-inner::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 9px solid transparent;
+    border-top-color: #eee;
+    z-index: -1;
+}
+
+/* 标题 */
+.reward-popup h4 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+}
+
+.reward-popup p {
+    margin: 0 0 16px 0;
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+}
+
+/* 支付方式选择 */
+.payment-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    justify-content: center;
+}
+
+.payment-option {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 12px;
+    color: #666;
+}
+
+.payment-option:hover {
+    border-color: #ccc;
+}
+
+.payment-option.active {
+    border-color: #1677ff;
+    background: #f0f8ff;
+    color: #1677ff;
+}
+
+.payment-option.active[data-payment="wechat"] {
+    border-color: #07c160;
+    background: #f0fff4;
+    color: #07c160;
+}
+
+.payment-icon {
+    font-size: 16px;
+}
+
+/* 二维码显示 */
+.qrcode-display {
+    text-align: center;
+}
+
+.qrcode-display img {
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #eee;
+}
+
+.qr-tip {
+    margin: 0;
+    font-size: 11px;
+    color: #888;
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+    .reward-popup-inner {
+        min-width: 240px;
+        padding: 16px;
+    }
+    
+    .qrcode-display img {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .payment-selector {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .payment-option {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+/* 暗黑模式支持 */
+@media (prefers-color-scheme: dark) {
+    .reward-popup-inner {
+        background: #2a2a2a;
+        border-color: #444;
+        color: #e0e0e0;
+    }
+    
+    .reward-popup-inner::after {
+        border-top-color: #2a2a2a;
+    }
+    
+    .reward-popup-inner::before {
+        border-top-color: #444;
+    }
+    
+    .reward-popup h4 {
+        color: #e0e0e0;
+    }
+    
+    .reward-popup p {
+        color: #ccc;
+    }
+    
+    .payment-option {
+        background: #333;
+        border-color: #444;
+        color: #ccc;
+    }
+    
+    .payment-option:hover {
+        border-color: #555;
+    }
+    
+    .qrcode-display img {
+        border-color: #444;
+    }
+    
+    .qr-tip {
+        color: #999;
+    }
+}
+</style>
+
+<script>
+// 简单的打赏悬停功能
+(function() {
+    'use strict';
+    
+    let isInitialized = false;
+    
+    function initRewardHover() {
+        if (isInitialized) return;
+        
+        // 查找打赏相关元素
+        const rewardContainer = document.querySelector('.reward-hover-container');
+        const paymentOptions = document.querySelectorAll('.payment-option');
+        const qrcode = document.getElementById('reward-qrcode');
+        
+        if (!rewardContainer || !qrcode) {
+            console.log('打赏元素未找到');
+            return;
+        }
+        
+        // 支付方式切换
+        paymentOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // 移除其他选项的active状态
+                paymentOptions.forEach(opt => opt.classList.remove('active'));
+                // 添加当前选项的active状态
+                this.classList.add('active');
+                
+                // 切换二维码
+                const payment = this.dataset.payment;
+                if (payment === 'alipay') {
+                    qrcode.src = '/images/payimg/alipayimg.png';
+                } else if (payment === 'wechat') {
+                    qrcode.src = '/images/payimg/weipayimg.png';
+                }
+                
+                console.log('切换到', payment, '支付方式');
+            });
+        });
+        
+        isInitialized = true;
+        console.log('Reward hover system initialized');
+    }
+    
+    // 初始化
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initRewardHover);
+    } else {
+        initRewardHover();
+    }
+    
+    // Pjax 兼容性
+    document.addEventListener('pjax:complete', function() {
+        isInitialized = false;
+        setTimeout(initRewardHover, 100);
+    });
+})();
+</script>
