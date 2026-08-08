@@ -16,7 +16,7 @@ background: https://imgapi.cn/api.php?zd=zsy&fl=dongman
 
 # Comment
 comment:
-    livere: MTAyMC81MzcwNy8zMDE4MA==  # https://www.livere.com
+    livere: KZBTlPdTKUrttT2iv2Vx  # https://www.livere.com
     #disqus: zknb
     #changyan: {appid: cywbOTzo8, conf: prod_4b0b4f9618f5c8510c3dac7597ffc448}   # http://changyan.kuaizhan.com/ 请进入 后台->安装畅言->通用代码安装 在代码处获取appid和conf
     #beaudar: {repo: zknb-666/comments, branch: main, issue-term: pathname, theme: github-light,crossorigin: anonymous}   #https://beaudar.lipk.org
